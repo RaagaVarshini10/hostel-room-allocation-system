@@ -1,0 +1,32 @@
+<a href="{% url 'my_booking' %}">My Booking</a>
+<hr>
+<h1>Available Hostels</h1>
+
+{% for hostel in hostels %}
+    <div style="border:1px solid black; padding:10px; margin:10px;">
+        <h2>
+    <a href="{% url 'hostel_detail' hostel.id %}">
+        {{ hostel.name }}
+    </a>
+</h2>
+        <p>{{ hostel.description }}</p>
+        <p><strong>Features:</strong> {{ hostel.features }}</p>
+    </div>
+{% empty %}
+    <p>No hostels available.</p>
+{% endfor %}
+<h2>Rooms</h2>
+
+{% for room in rooms %}
+    <div style="border:1px solid black; padding:10px; margin:10px;">
+        <p>
+            <a href="{% url 'room_detail' room.id %}">
+                Room Number: {{ room.room_number }}
+            </a>
+        </p>
+        <p>Sharing Type: {{ room.sharing_type }}-Sharing</p>
+    </div>
+{% empty %}
+    <p>No rooms available.</p>
+{% endfor %}
+

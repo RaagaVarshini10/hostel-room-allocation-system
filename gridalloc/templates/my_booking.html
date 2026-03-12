@@ -1,0 +1,9 @@
+<h1>My Booking</h1>
+
+{% if booking %}
+    <p><strong>Hostel:</strong> {{ booking.bed.room.hostel.name }}</p>
+    <p><strong>Room:</strong> {{ booking.bed.room.room_number }}</p>
+    <p><strong>Bed:</strong> {{ booking.bed.bed_number }}</p>
+{% else %}
+    <p>You have not booked any bed yet.</p>
+{% endif %}

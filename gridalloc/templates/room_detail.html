@@ -1,0 +1,17 @@
+<h1>Room {{ room.room_number }}</h1>
+
+<h2>Beds</h2>
+
+{% for bed in beds %}
+    <div style="border:1px solid black; padding:10px; margin:10px;">
+        <p>Bed: {{ bed.bed_number }}</p>
+
+        {% if bed.is_booked %}
+            <p style="color:red;">Already Booked</p>
+        {% else %}
+            <a href="{% url 'book_bed' bed.id %}">
+                Book This Bed
+            </a>
+        {% endif %}
+    </div>
+{% endfor %}

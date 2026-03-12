@@ -1,0 +1,19 @@
+<body style="background-color: #e6f2ff; text-align: center;">
+
+    <h1 style="color: darkgreen;">Register</h1>
+
+    <div style="margin-top: 30px;">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <input type="text" name="username" placeholder="Enter Username">
+            <br><br>
+            
+            <input type="password" name="password" placeholder="Enter Password">
+            <br><br>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+</body>
