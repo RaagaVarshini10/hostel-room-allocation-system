@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db import transaction
 
 from .models import (
     Hostel,
@@ -322,12 +323,11 @@ def admin_applications(request):
         }
     )
 @login_required
+@transaction.atomic
 def approve_application(request, application_id):
 
     if not request.user.is_staff:
-        return HttpResponse(
-            "Unauthorized"
-        )
+        return HttpResponse("Unauthorized")
 
     application = get_object_or_404(
         HostelApplication,
@@ -336,43 +336,39 @@ def approve_application(request, application_id):
 
     # 1. Application must still be pending
     if application.status != "Pending":
-
         messages.warning(
             request,
             "This application has already been processed."
         )
-
         return redirect("admin_applications")
 
     # 2. Student must not already have an allocation
     if Booking.objects.filter(
         student=application.student
     ).exists():
-
         messages.warning(
             request,
             "This student already has an allocation."
         )
-
         return redirect("admin_applications")
 
     # 3. Find rooms matching:
     #    - selected hostel
     #    - selected sharing preference
-    #    - at least one available bed
+    #    - bed is not marked booked
+    #    - bed does not already have a Booking
     available_rooms = Room.objects.filter(
         hostel=application.hostel,
         sharing_type=application.room_preference,
-        beds__is_booked=False
+        beds__is_booked=False,
+        beds__booking__isnull=True
     ).distinct()
 
     if not available_rooms.exists():
-
         messages.error(
             request,
             "No suitable room or bed is currently available."
         )
-
         return redirect("admin_applications")
 
     # 4. Select the room with the most available beds
@@ -381,18 +377,17 @@ def approve_application(request, application_id):
         key=lambda room: room.available_beds
     )
 
-    # 5. Get an available bed from that room
+    # 5. Get an actually available bed
     available_bed = selected_room.beds.filter(
-        is_booked=False
+        is_booked=False,
+        booking__isnull=True
     ).first()
 
     if not available_bed:
-
         messages.error(
             request,
             "No available bed found in the selected room."
         )
-
         return redirect("admin_applications")
 
     # 6. Mark the bed as booked
@@ -415,7 +410,6 @@ def approve_application(request, application_id):
     )
 
     return redirect("admin_applications")
-
 @login_required
 def reject_application(request, application_id):
 
