@@ -1,9 +1,171 @@
-<h1>My Booking</h1>
+{% extends "base.html" %}
 
-{% if booking %}
-    <p><strong>Hostel:</strong> {{ booking.bed.room.hostel.name }}</p>
-    <p><strong>Room:</strong> {{ booking.bed.room.room_number }}</p>
-    <p><strong>Bed:</strong> {{ booking.bed.bed_number }}</p>
-{% else %}
-    <p>You have not booked any bed yet.</p>
-{% endif %}
+{% block title %}
+My Allocation | GridAlloc
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <h2 class="fw-bold">
+                My Allocation
+            </h2>
+
+            <p class="text-muted">
+                View your current hostel room and bed allocation.
+            </p>
+
+
+            {% if booking %}
+
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">
+                                {{ booking.bed.room.hostel.name }}
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                Hostel Allocation
+                            </p>
+
+                        </div>
+
+                        <span class="badge bg-success fs-6">
+                            Allocated
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="row mt-3">
+
+                        <div class="col-md-4 mb-4">
+
+                            <div class="text-muted">
+                                Hostel
+                            </div>
+
+                            <h5 class="fw-bold">
+                                {{ booking.bed.room.hostel.name }}
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-4 mb-4">
+
+                            <div class="text-muted">
+                                Room
+                            </div>
+
+                            <h5 class="fw-bold">
+                                {{ booking.bed.room.room_number }}
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-4 mb-4">
+
+                            <div class="text-muted">
+                                Bed
+                            </div>
+
+                            <h5 class="fw-bold">
+                                {{ booking.bed.bed_number }}
+                            </h5>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted">
+                                Sharing Type
+                            </div>
+
+                            <p class="fw-semibold">
+                                {{ booking.bed.room.sharing_type }} Sharing
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted">
+                                Allocated On
+                            </div>
+
+                            <p class="fw-semibold">
+                                {{ booking.booked_at|date:"d M Y, h:i A" }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="alert alert-success mt-3 mb-0">
+
+                        Your hostel room and bed have been successfully allocated.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-body text-center py-5">
+
+                    <h4>
+                        No Allocation Yet
+                    </h4>
+
+                    <p class="text-muted">
+                        You don't have a hostel allocation yet.
+                    </p>
+
+                    <a
+                        href="{% url 'apply_hostel' %}"
+                        class="btn btn-primary"
+                    >
+                        Apply for Hostel
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

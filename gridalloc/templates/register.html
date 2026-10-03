@@ -1,19 +1,283 @@
-<body style="background-color: #e6f2ff; text-align: center;">
+{% extends "base.html" %}
 
-    <h1 style="color: darkgreen;">Register</h1>
+{% block content %}
 
-    <div style="margin-top: 30px;">
-        <form method="POST">
-            {% csrf_token %}
-            
-            <input type="text" name="username" placeholder="Enter Username">
-            <br><br>
-            
-            <input type="password" name="password" placeholder="Enter Password">
-            <br><br>
-            
-            <button type="submit">Register</button>
-        </form>
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+
+                        <h2 class="fw-bold">
+                            Create Student Account 🎓
+                        </h2>
+
+                        <p class="text-muted">
+                            Register for GridAlloc hostel services.
+                        </p>
+
+                    </div>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <!-- Personal Details -->
+
+                        <h5 class="fw-bold mb-3">
+                            Personal Details
+                        </h5>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="full_name"
+                                class="form-control"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                name="phone"
+                                class="form-control"
+                                placeholder="Enter your phone number"
+                                required
+                            >
+
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <!-- Academic Details -->
+
+                        <h5 class="fw-bold mb-3">
+                            Academic Details
+                        </h5>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Register Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="register_number"
+                                class="form-control"
+                                placeholder="Enter your register number"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Department
+                            </label>
+
+                            <select
+                                name="department"
+                                class="form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Department
+                                </option>
+
+                                <option value="IT">
+                                    Information Technology
+                                </option>
+
+                                <option value="CSE">
+                                    Computer Science Engineering
+                                </option>
+
+                                <option value="ECE">
+                                    Electronics and Communication Engineering
+                                </option>
+
+                                <option value="EEE">
+                                    Electrical and Electronics Engineering
+                                </option>
+
+                                <option value="MECH">
+                                    Mechanical Engineering
+                                </option>
+
+                                <option value="CIVIL">
+                                    Civil Engineering
+                                </option>
+
+                                <option value="OTHER">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Year of Study
+                            </label>
+
+                            <select
+                                name="year"
+                                class="form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Year
+                                </option>
+
+                                <option value="1">
+                                    1st Year
+                                </option>
+
+                                <option value="2">
+                                    2nd Year
+                                </option>
+
+                                <option value="3">
+                                    3rd Year
+                                </option>
+
+                                <option value="4">
+                                    4th Year
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <!-- Account Details -->
+
+                        <h5 class="fw-bold mb-3">
+                            Account Details
+                        </h5>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-control"
+                                placeholder="Create a username"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Create a password"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100 py-2"
+                        >
+                            Create Account
+                        </button>
+
+
+                    </form>
+
+
+                    <div class="text-center mt-4">
+
+                        <p class="text-muted mb-0">
+
+                            Already have an account?
+
+                            <a href="{% url 'login' %}">
+                                Login
+                            </a>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-</body>
+</div>
+
+{% endblock %}

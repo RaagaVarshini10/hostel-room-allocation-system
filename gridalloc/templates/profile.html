@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">My Profile 👤</h2>
+        <p class="text-muted">
+            View your GridAlloc account information.
+        </p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-4">
+
+                        <div
+                            class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                            style="width:70px;height:70px;font-size:30px;">
+                            👤
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="fw-bold mb-1">
+                                {{ user.username }}
+                            </h4>
+
+                            <span class="badge bg-success">
+                                Active Student
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row g-4 mt-2">
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Username
+                            </small>
+
+                            <p class="fw-semibold">
+                                {{ user.username }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Email
+                            </small>
+
+                            <p class="fw-semibold">
+                                {% if user.email %}
+                                    {{ user.email }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                First Name
+                            </small>
+
+                            <p class="fw-semibold">
+                                {% if user.first_name %}
+                                    {{ user.first_name }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Last Name
+                            </small>
+
+                            <p class="fw-semibold">
+                                {% if user.last_name %}
+                                    {{ user.last_name }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Account Created
+                            </small>
+
+                            <p class="fw-semibold">
+                                {{ user.date_joined|date:"d M Y" }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Account Type
+                            </small>
+
+                            <p class="fw-semibold">
+                                Student
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

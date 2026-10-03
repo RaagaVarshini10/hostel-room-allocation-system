@@ -1,17 +1,114 @@
-<h1>Room {{ room.room_number }}</h1>
+{% extends "base.html" %}
 
-<h2>Beds</h2>
+{% block title %}
+Room {{ room.room_number }} | GridAlloc
+{% endblock %}
 
-{% for bed in beds %}
-    <div style="border:1px solid black; padding:10px; margin:10px;">
-        <p>Bed: {{ bed.bed_number }}</p>
 
-        {% if bed.is_booked %}
-            <p style="color:red;">Already Booked</p>
-        {% else %}
-            <a href="{% url 'book_bed' bed.id %}">
-                Book This Bed
-            </a>
-        {% endif %}
+{% block content %}
+
+<div class="container py-5">
+
+    <a
+        href="{% url 'hostel_detail' room.hostel.id %}"
+        class="text-decoration-none"
+    >
+        ← Back to {{ room.hostel.name }}
+    </a>
+
+
+    <div class="card shadow-sm mt-3 p-4">
+
+        <div class="d-flex justify-content-between">
+
+            <div>
+
+                <h1 class="fw-bold">
+                    Room {{ room.room_number }}
+                </h1>
+
+                <p class="text-muted">
+                    {{ room.sharing_type }} Sharing
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <span class="badge bg-success fs-6">
+
+                    {{ room.available_beds }}
+                    Available
+
+                </span>
+
+            </div>
+
+        </div>
+
     </div>
-{% endfor %}
+
+
+    <h3 class="fw-bold mt-5">
+        Beds
+    </h3>
+
+
+    <div class="row g-4 mt-1">
+
+        {% for bed in beds %}
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm p-4">
+
+                <div class="d-flex justify-content-between">
+
+                    <h5>
+                        🛏️ Bed {{ bed.bed_number }}
+                    </h5>
+
+
+                    {% if bed.is_booked %}
+
+                        <span class="badge bg-danger">
+                            Occupied
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-success">
+                            Available
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+              {% if not bed.is_booked %}
+
+    <span class="text-success mt-3 d-block">
+        Available for allocation
+    </span>
+
+{% endif %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            No beds available.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

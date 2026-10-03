@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}
+Applications | GridAlloc
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold">
+        Hostel Applications
+    </h2>
+
+    <p class="text-muted">
+        Review student hostel applications.
+    </p>
+
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Hostel
+                        </th>
+                        <th>
+                            Preference
+                        </th>
+                        <th>
+                            Available Beds
+                        </th>
+                        <th>
+                            Applied
+                        </th>
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for application in applications %}
+
+                    <tr>
+
+                        <td>
+                            {{ application.student.username }}
+                        </td>
+
+                        <td>
+                            {{ application.hostel.name }}
+                        </td>
+
+                        <td>
+                            {{ application.room_preference }} Sharing
+                        </td>
+
+                        <td>
+                            {% if application.available_beds_count > 0 %}
+                                <span class="badge bg-success">
+                                    {{ application.available_beds_count }} Available
+                                </span>
+                            {% else %}
+                                <span class="badge bg-danger">
+                                    No Beds
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ application.applied_at|date:"d M Y" }}
+                        </td>
+
+                        <td>
+
+                            {% if application.status == "Pending" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            {% elif application.status == "Approved" %}
+
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+                                    Rejected
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if application.status == "Pending" %}
+
+                            <a
+                                href="{% url 'approve_application' application.id %}"
+                                class="btn btn-sm btn-success"
+                            >
+                                Approve
+                            </a>
+
+                            <a
+                                href="{% url 'reject_application' application.id %}"
+                                class="btn btn-sm btn-outline-danger"
+                            >
+                                Reject
+                            </a>
+
+                            {% else %}
+
+                            <span class="text-muted">
+                                Processed
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="text-center py-5"
+                        >
+
+                            No applications found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

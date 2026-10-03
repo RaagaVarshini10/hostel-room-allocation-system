@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Application | GridAlloc
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <h2 class="fw-bold">
+                My Hostel Application
+            </h2>
+
+            <p class="text-muted">
+                Track the status of your hostel application.
+            </p>
+
+
+            {% if application %}
+
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <h4 class="fw-bold mb-0">
+                            {{ application.hostel.name }}
+                        </h4>
+
+
+                        {% if application.status == "Pending" %}
+
+                            <span class="badge bg-warning text-dark fs-6">
+                                Pending
+                            </span>
+
+                        {% elif application.status == "Approved" %}
+
+                            <span class="badge bg-success fs-6">
+                                Approved
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger fs-6">
+                                Rejected
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Hostel
+                            </strong>
+
+                            <p class="text-muted mb-0">
+                                {{ application.hostel.name }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Room Preference
+                            </strong>
+
+                            <p class="text-muted mb-0">
+                                {{ application.room_preference }} Sharing
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Applied On
+                            </strong>
+
+                            <p class="text-muted mb-0">
+                                {{ application.applied_at|date:"d M Y, h:i A" }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Application Status
+                            </strong>
+
+                            <p class="text-muted mb-0">
+                                {{ application.status }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if application.reason %}
+
+                    <div class="mt-2">
+
+                        <strong>
+                            Reason / Additional Information
+                        </strong>
+
+                        <p class="text-muted mt-1">
+                            {{ application.reason }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if application.status == "Pending" %}
+
+                    <div class="alert alert-warning mt-4 mb-0">
+
+                        Your application is currently under review.
+                        Please wait for the administrator to process it.
+
+                    </div>
+
+
+                    {% elif application.status == "Approved" %}
+
+                    <div class="alert alert-success mt-4 mb-0">
+
+                        Your application has been approved.
+                        Your hostel allocation is available under
+                        <strong>My Allocation</strong>.
+
+                    </div>
+
+
+                    {% elif application.status == "Rejected" %}
+
+                    <div class="alert alert-danger mt-4 mb-0">
+
+                        Your application was rejected.
+                        You may submit a new application if required.
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-body text-center py-5">
+
+                    <h4>
+                        No Application Found
+                    </h4>
+
+                    <p class="text-muted">
+                        You haven't submitted a hostel application yet.
+                    </p>
+
+                    <a
+                        href="{% url 'apply_hostel' %}"
+                        class="btn btn-primary"
+                    >
+                        Apply for Hostel
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

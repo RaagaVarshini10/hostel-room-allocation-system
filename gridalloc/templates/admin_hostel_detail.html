@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ hostel.name }} | Admin | GridAlloc
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="text-decoration-none"
+    >
+        ← Back to Admin Dashboard
+    </a>
+
+    <div class="card shadow-sm mt-3 p-4">
+
+        <span class="badge bg-primary w-auto align-self-start">
+            Admin View
+        </span>
+
+        <h1 class="fw-bold mt-3">
+            {{ hostel.name }}
+        </h1>
+
+        <p class="text-muted">
+            Room and bed availability
+        </p>
+
+    </div>
+
+
+    <h3 class="fw-bold mt-5 mb-3">
+        Rooms
+    </h3>
+
+
+    <div class="row g-4">
+
+        {% for room in rooms %}
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm p-4">
+
+                <div class="d-flex justify-content-between">
+
+                    <h4>
+                        Room {{ room.room_number }}
+                    </h4>
+
+                    {% if room.available_beds > 0 %}
+
+                        <span class="badge bg-success">
+                            Available
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-danger">
+                            Full
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+                <p class="text-muted">
+                    {{ room.sharing_type }} Sharing
+                </p>
+
+                <p>
+                    <strong>
+                        {{ room.available_beds }}
+                    </strong>
+                    / {{ room.total_beds }} beds available
+                </p>
+
+
+                <hr>
+
+
+                <h6 class="fw-bold">
+                    Beds
+                </h6>
+
+                {% for bed in room.beds.all %}
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            🛏️ Bed {{ bed.bed_number }}
+                        </span>
+
+                        {% if bed.is_booked %}
+
+                            <span class="badge bg-danger">
+                                Occupied
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="text-muted">
+            No rooms found.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
